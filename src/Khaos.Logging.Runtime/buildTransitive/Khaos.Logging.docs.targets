@@ -1,0 +1,26 @@
+<Project>
+  <PropertyGroup>
+    <KhaosLoggingDocsFolderName Condition="'$(KhaosLoggingDocsFolderName)' == ''">Khaos.Logging</KhaosLoggingDocsFolderName>
+    <_KhaosLoggingDocsSource>$(MSBuildThisFileDirectory)..\docs\</_KhaosLoggingDocsSource>
+    <_KhaosLoggingDocsDestination Condition="'$(SolutionDir)' != ''">$(SolutionDir)docs\$(KhaosLoggingDocsFolderName)\</_KhaosLoggingDocsDestination>
+    <_KhaosLoggingDocsDestination Condition="'$(SolutionDir)' == ''">$(MSBuildProjectDirectory)\docs\$(KhaosLoggingDocsFolderName)\</_KhaosLoggingDocsDestination>
+  </PropertyGroup>
+
+  <Target Name="KhaosLoggingCopyDocs"
+          BeforeTargets="BeforeBuild"
+          Condition="Exists('$(_KhaosLoggingDocsSource)') and '$(_KhaosLoggingDocsDestination)' != '' and '$(KhaosLoggingDocsCopied)' != 'true'">
+    <ItemGroup>
+      <_KhaosLoggingDocFiles Include="$(_KhaosLoggingDocsSource)**\*.*" />
+    </ItemGroup>
+
+    <MakeDir Directories="$(_KhaosLoggingDocsDestination)" />
+
+    <Copy SourceFiles="@(_KhaosLoggingDocFiles)"
+          DestinationFiles="@(_KhaosLoggingDocFiles->'$(_KhaosLoggingDocsDestination)%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+
+    <PropertyGroup>
+      <KhaosLoggingDocsCopied>true</KhaosLoggingDocsCopied>
+    </PropertyGroup>
+  </Target>
+</Project>
