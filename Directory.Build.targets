@@ -1,0 +1,19 @@
+<Project>
+  <Target Name="EnsureCommonOutputDirectories" BeforeTargets="BeforeBuild">
+    <MakeDir Directories="$(ArtifactsDir)" />
+    <MakeDir Directories="$(TestResultsDir)" />
+  </Target>
+
+  <Target Name="GenerateHtmlCoverageReport"
+          AfterTargets="VSTest"
+          Condition="'$(IsTestProject)' == 'true' and Exists('$(CoverletOutput).cobertura.xml')">
+    <PropertyGroup>
+      <CoverageReportDir>$(TestResultsDir)$(MSBuildProjectName)\coverage-html</CoverageReportDir>
+      <ReportGeneratorDll>$(PkgReportGenerator)\tools\net9.0\ReportGenerator.dll</ReportGeneratorDll>
+    </PropertyGroup>
+
+    <MakeDir Directories="$(CoverageReportDir)" />
+
+    <Exec Command='dotnet exec &quot;$(ReportGeneratorDll)&quot; -reports:&quot;$(CoverletOutput).cobertura.xml&quot; -targetdir:&quot;$(CoverageReportDir)&quot; -reporttypes:Html' />
+  </Target>
+</Project>

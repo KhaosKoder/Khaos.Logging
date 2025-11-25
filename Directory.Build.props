@@ -1,0 +1,63 @@
+<Project>
+  <PropertyGroup>
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+    <ArtifactsDir>$(RepoRoot)artifacts\</ArtifactsDir>
+    <TestResultsDir>$(RepoRoot)TestResults\</TestResultsDir>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <PackageOutputPath>$(ArtifactsDir)</PackageOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsTestProject Condition="'$(IsTestProject)' == '' and $([System.String]::Copy('$(MSBuildProjectName)').EndsWith('.Tests'))">true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MinVer" Version="5.*" PrivateAssets="all" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <MinVerTagPrefix>Khaos.Logging/v</MinVerTagPrefix>
+    <MinVerAutoIncrement>minor</MinVerAutoIncrement>
+    <MinVerDefaultPreReleaseIdentifiers>alpha.0</MinVerDefaultPreReleaseIdentifiers>
+    <MinVerVerbosity>minimal</MinVerVerbosity>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>$(MinVerVersion)</Version>
+    <PackageVersion>$(MinVerPackageVersion)</PackageVersion>
+    <AssemblyVersion>$(MinVerAssemblyVersion)</AssemblyVersion>
+    <FileVersion>$(MinVerFileVersion)</FileVersion>
+    <InformationalVersion>$(MinVerInformationalVersion)</InformationalVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>KhaosKoder</Authors>
+    <Company>KhaosKoder</Company>
+    <RepositoryUrl>https://github.com/KhaosLabs/Khaos.Logging</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/KhaosLabs/Khaos.Logging</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+    <IsPackable>false</IsPackable>
+    <VSTestResultsDirectory>$(TestResultsDir)</VSTestResultsDirectory>
+    <CollectCoverage>true</CollectCoverage>
+    <CoverletOutput>$(TestResultsDir)$(MSBuildProjectName)\coverage\coverage</CoverletOutput>
+    <CoverletOutputFormat>json,cobertura</CoverletOutputFormat>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageReference Include="coverlet.msbuild" Version="6.*" PrivateAssets="all" />
+    <PackageReference Include="ReportGenerator" Version="5.*" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

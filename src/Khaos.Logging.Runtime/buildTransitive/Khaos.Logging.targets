@@ -1,0 +1,3 @@
+<Project>
+  <Import Project="Khaos.Logging.docs.targets" Condition="Exists('$(MSBuildThisFileDirectory)Khaos.Logging.docs.targets')" />
+</Project>
