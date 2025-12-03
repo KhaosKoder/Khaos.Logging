@@ -41,7 +41,7 @@ jobs:
             exit 1
           fi
 
-          dotnet pack src/Khaos.Logging/Khaos.Logging.csproj \
+          dotnet pack src/Khaos.Logging.Runtime/Khaos.Logging.Runtime.csproj \
                  --configuration Release \
                  --no-build \
                  -p:PackageVersion=$VERSION \

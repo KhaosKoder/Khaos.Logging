@@ -27,7 +27,7 @@ Khaos.Logging keeps `ILogger` in the picture; it simply builds strongly-typed fa
 
 1. **Install the package**
 	```powershell
-	dotnet add package Khaos.Logging
+	dotnet add package KhaosCode.Logging
 	```
 2. **Declare your log events**
 	```csharp

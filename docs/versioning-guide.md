@@ -2,7 +2,7 @@
 
 ## Overview
 
-This solution uses **Semantic Versioning 2.0.0**, derives package versions from **Git tags**, and relies on **[MinVer](https://github.com/adamralph/minver)** to compute the effective version during every build. All packable projects (currently the `Khaos.Logging` package that bundles the runtime, generator, and analyzers) receive the **same version number** for a given commit. Git tags following the `Khaos.Logging/vX.Y.Z` pattern are the single source of truth for released versions.
+This solution uses **Semantic Versioning 2.0.0**, derives package versions from **Git tags**, and relies on **[MinVer](https://github.com/adamralph/minver)** to compute the effective version during every build. All packable projects (currently the `KhaosCode.Logging` package that bundles the runtime, generator, and analyzers) receive the **same version number** for a given commit. Git tags following the `Khaos.Logging/vX.Y.Z` pattern are the single source of truth for released versions.
 
 ## Semantic Versioning Rules
 

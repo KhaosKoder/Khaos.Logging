@@ -5,8 +5,8 @@ This guide walks you through installing the NuGet package, declaring log events,
 ## Installation
 
 1. Add the package reference:
-   ```bash
-   dotnet add package Khaos.Logging
+    ```bash
+    dotnet add package KhaosCode.Logging
    ```
 2. The runtime targets `net9.0` and brings the source generator + analyzer along for the ride, so no extra references are needed.
 3. Restore your solution and build once so the generator can emit loggers for any enums already marked with `[LogEventSource]`.
@@ -119,7 +119,7 @@ This creates an always-available set of docs inside the consumer solution withou
 ## Quick Checklist
 
 - [ ] Add/annotate your enum.
-- [ ] Reference `Khaos.Logging` and rebuild once.
+- [ ] Reference `KhaosCode.Logging` and rebuild once.
 - [ ] Call `AddGeneratedLogging()` during DI setup.
 - [ ] Inject the generated loggers and call the strongly-typed `IEventLogger` members.
 - [ ] Use the copied docs under `docs/Khaos.Logging` for future reference.
