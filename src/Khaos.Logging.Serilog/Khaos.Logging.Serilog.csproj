@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <AssemblyName>Khaos.Logging.Serilog</AssemblyName>
+    <RootNamespace>Khaos.Logging.Serilog</RootNamespace>
+    <PackageId>KhaosCode.Logging.Serilog</PackageId>
+    <Description>Serilog integration for Khaos.Logging with LogStash network sink support.</Description>
+    <PackageTags>logging;serilog;logstash;elk;structured-logging</PackageTags>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+    <PackageReference Include="Serilog" Version="4.2.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Network" Version="2.0.2.68" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Khaos.Logging.Runtime\Khaos.Logging.Runtime.csproj" />
+  </ItemGroup>
+
+</Project>
