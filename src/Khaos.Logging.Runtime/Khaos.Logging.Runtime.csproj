@@ -1,5 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <!--
+    Multi-DLL Bundling Pattern: Explicit Analyzer Paths
+    
+    This package bundles the Runtime, Generator, and Analyzers into a single NuGet package.
+    The Generator and Analyzers target netstandard2.0 (required by Roslyn) while Runtime
+    targets net9.0, so we cannot use TargetsForTfmSpecificBuildOutput.
+    
+    Instead, we use explicit <None Include="..." Pack="true" PackagePath="analyzers/...">
+    to bundle the analyzer DLLs from their build output paths.
+  -->
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>Khaos.Logging.Runtime</AssemblyName>
@@ -14,6 +23,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
   </ItemGroup>
 
+  <!-- Analyzer project references for build-time code generation -->
   <ItemGroup>
     <ProjectReference Include="..\Khaos.Logging.Generator\Khaos.Logging.Generator.csproj"
                       ReferenceOutputAssembly="false"
@@ -25,6 +35,9 @@
                       PrivateAssets="all" />
   </ItemGroup>
 
+  <!-- Bundle analyzer/generator DLLs into the package.
+       Note: Analyzers target netstandard2.0 (required by Roslyn) while Runtime targets net9.0,
+       so we use explicit paths rather than TargetsForTfmSpecificBuildOutput. -->
   <ItemGroup>
     <None Include="..\Khaos.Logging.Generator\bin\$(Configuration)\netstandard2.0\Khaos.Logging.Generator.dll"
           Pack="true"

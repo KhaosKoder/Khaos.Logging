@@ -35,8 +35,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Authors>KhaosKoder</Authors>
-    <Company>KhaosKoder</Company>
+    <Authors>Khaos</Authors>
+    <Company>Khaos</Company>
     <RepositoryUrl>https://github.com/KhaosLabs/Khaos.Logging</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/KhaosLabs/Khaos.Logging</PackageProjectUrl>
