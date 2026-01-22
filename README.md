@@ -49,6 +49,21 @@ Khaos.Logging keeps `ILogger` in the picture; it simply builds strongly-typed fa
 	builder.Services.AddLogging();
 	builder.Services.AddGeneratedLogging();
 	```
+
+	**Or use Serilog with LogStash:**
+	```csharp
+	builder.Services.AddKhaosSerilogLogging(options =>
+	{
+	    options.WriteToConsole = true;
+	    options.LogStash = new LogStashOptions
+	    {
+	        Host = "elk.example.com",
+	        Port = 5044,
+	        ApplicationName = "MyApp"
+	    };
+	});
+	builder.Services.AddGeneratedLogging();
+	```
 4. **Inject and use**
 	```csharp
 	public sealed class StartupService
@@ -77,11 +92,22 @@ You absolutely can (and still do). Khaos.Logging is a layer **on top of** `ILogg
 
 When a dependency expects `ILogger` you keep supplying `ILogger`; generated loggers internally use the same `ILogger<T>` instances, so you can mix and match without wrappers. Think of the generated APIs as purpose-built entry points into the existing logging infrastructure, not a replacement.
 
+## Serilog Integration
+
+For production scenarios requiring structured logging to ELK/LogStash, install the Serilog package:
+
+```powershell
+dotnet add package KhaosCode.Logging.Serilog
+```
+
+See the [User Guide](docs/user-guide.md#serilog-integration) for full configuration options.
+
 ## Design Principles
 
 - **Enums as contracts**: Everything—EventId, scope metadata, documentation—derives from the annotated enum.
 - **Hierarchical surface**: Area/group/action tokens become nested types, mirroring the shape of your domain.
 - **No runtime surprises**: All code is generated at build time; DI registration is explicit and scoped.
+- **Pluggable backends**: Use Microsoft.Extensions.Logging (default) or Serilog with LogStash.
 - **Documentation included**: The NuGet ships the `docs/` folder plus build-transitive targets that copy it into consuming solutions for easy reference.
 
 ## Documentation

@@ -101,6 +101,103 @@ The included analyzers catch common mistakes:
 
 Treat warnings as guidance for best practices; builds will fail on the errors.
 
+## Serilog Integration
+
+For production deployments requiring structured logging to ELK stack, LogStash, or other Serilog sinks, use the Serilog package:
+
+### Installation
+
+```bash
+dotnet add package KhaosCode.Logging.Serilog
+```
+
+### Basic Configuration
+
+```csharp
+using Khaos.Logging.Serilog;
+
+builder.Services.AddKhaosSerilogLogging(options =>
+{
+    options.MinimumLevel = LogLevel.Information;
+    options.WriteToConsole = true;
+});
+builder.Services.AddGeneratedLogging();
+```
+
+### LogStash Network Sink
+
+To send logs directly to LogStash over TCP or UDP:
+
+```csharp
+builder.Services.AddKhaosSerilogLogging(options =>
+{
+    options.MinimumLevel = LogLevel.Information;
+    options.WriteToConsole = true;  // Also write to console
+    options.LogStash = new LogStashOptions
+    {
+        Host = "elk.example.com",
+        Port = 5044,
+        UseTcp = true,              // TCP (default) or UDP
+        ApplicationName = "MyApp",
+        Environment = "Production"
+    };
+});
+```
+
+### Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `MinimumLevel` | `LogLevel` | `Information` | Minimum log level to capture |
+| `WriteToConsole` | `bool` | `true` | Write logs to console |
+| `UseCompactJsonConsole` | `bool` | `false` | Use compact JSON format for console |
+| `GlobalProperties` | `Dictionary<string,object>` | `{}` | Properties added to all log events |
+
+**LogStashOptions:**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `Host` | `string` | `localhost` | LogStash server hostname |
+| `Port` | `int` | `5000` | LogStash TCP/UDP port |
+| `UseTcp` | `bool` | `true` | Use TCP (true) or UDP (false) |
+| `ApplicationName` | `string?` | `null` | App name in log events |
+| `Environment` | `string?` | `null` | Environment name |
+| `Enabled` | `bool` | `true` | Enable/disable LogStash sink |
+
+### JSON Output Format
+
+The LogStash sink outputs ELK-compatible JSON:
+
+```json
+{
+  "@timestamp": "2026-01-22T10:30:00.000Z",
+  "@version": "1",
+  "level": "Information",
+  "message": "Opening connection for tenant Contoso",
+  "host": "web-server-01",
+  "application": "MyApp",
+  "environment": "Production",
+  "event_id": 2000,
+  "event_path": "MyApp.DB.Connection.Open",
+  "event_name": "MyApp.DB.Connection.Open",
+  "logger": "MyApp.Services.DbService",
+  "fields": {
+    "Tenant": "Contoso"
+  }
+}
+```
+
+### Choosing Between Backends
+
+| Scenario | Recommended Backend |
+|----------|-------------------|
+| Development / debugging | Default (Microsoft.Extensions.Logging) |
+| Production with console/file | Either works |
+| ELK stack / LogStash | Serilog with LogStash sink |
+| Cloud logging (App Insights, etc.) | Serilog with appropriate sink |
+
+Both backends preserve full `EventId`, `EventPath`, and structured logging semantics.
+
 ## Documentation Copy Behavior
 
 The NuGet package bundles the entire `docs/` directory and a build-transitive target named `Khaos.Logging.docs.targets`. When a consuming project restores the package:
