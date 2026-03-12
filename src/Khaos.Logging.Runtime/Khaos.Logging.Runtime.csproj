@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <!--
     Multi-DLL Bundling Pattern: Explicit Analyzer Paths
     
@@ -13,7 +13,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>Khaos.Logging.Runtime</AssemblyName>
     <RootNamespace>Khaos.Logging</RootNamespace>
-    <PackageId>KhaosCode.Logging</PackageId>
+    <PackageId>KhaosKode.Logging</PackageId>
     <Description>Enum-driven hierarchical logging helpers, source generator, and analyzers.</Description>
     <PackageTags>logging;source-generator;diagnostics</PackageTags>
     <IncludeBuildOutput>true</IncludeBuildOutput>
@@ -52,7 +52,7 @@
     <None Include="..\..\docs\**\*.*" Pack="true" PackagePath="docs\%(RecursiveDir)%(Filename)%(Extension)" />
     <None Include="buildTransitive\Khaos.Logging.docs.targets" Pack="true" PackagePath="buildTransitive" />
     <None Include="buildTransitive\Khaos.Logging.targets" Pack="true" PackagePath="buildTransitive" />
-    <None Include="buildTransitive\KhaosCode.Logging.targets" Pack="true" PackagePath="buildTransitive" />
+    <None Include="buildTransitive\KhaosKode.Logging.targets" Pack="true" PackagePath="buildTransitive" />
   </ItemGroup>
 
 </Project>

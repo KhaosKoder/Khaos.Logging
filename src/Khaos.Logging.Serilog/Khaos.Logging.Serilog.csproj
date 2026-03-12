@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>Khaos.Logging.Serilog</AssemblyName>
     <RootNamespace>Khaos.Logging.Serilog</RootNamespace>
-    <PackageId>KhaosCode.Logging.Serilog</PackageId>
+    <PackageId>KhaosKode.Logging.Serilog</PackageId>
     <Description>Serilog integration for Khaos.Logging with LogStash network sink support.</Description>
     <PackageTags>logging;serilog;logstash;elk;structured-logging</PackageTags>
     <Nullable>enable</Nullable>
